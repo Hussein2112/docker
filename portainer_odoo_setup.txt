@@ -1,0 +1,30 @@
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker rmi  $(docker images -aq)
+docker volume rm $(docker volume ls -q)
+
+docker network rm $(docker network  ls -q)
+
+#Now create the Docker container
+
+ docker run -d -p 8000:8000 -p 9443:9443 --name portainer     --restart=always     -v /var/run/docker.sock:/var/run/docker.sock     -v portainer_data:/data     portainer/portainer-ce:2.9.3 --network odoo-net
+
+#To reset the password
+1- Stop the portainer container
+2-
+docker pull portainer/helper-reset-password
+docker run --rm -v portainer_data:/data portainer/helper-reset-password
+
+
+After you login to the portainer
+1- Click on the container/Docker image
+2- Click on the stack
+
+
+Go the docker HUB URL for odoo
+https://hub.docker.com/_/odoo
+
+Scroll to the bottom and you will find the code for
+creating the odoo container.
+Paste that into the ADD Stack on the portainer
+
