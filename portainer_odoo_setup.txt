@@ -9,7 +9,7 @@ docker network rm $(docker network  ls -q)
 
  docker run -d -p 8000:8000 -p 9443:9443 --name portainer     --restart=always     -v /var/run/docker.sock:/var/run/docker.sock     -v portainer_data:/data     portainer/portainer-ce:2.9.3 --network odoo-net
 
-#To reset the password
+##To reset the password
 1- Stop the portainer container
 2-
 docker pull portainer/helper-reset-password
