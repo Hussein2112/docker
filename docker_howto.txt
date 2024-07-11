@@ -1,0 +1,60 @@
+1- Download a apache webserver image from DockerHub:
+-----------------------------------------------------
+docker pull docker.io/library/httpd:latest
+
+2- Start the Image you just downloaded with a simple name "myApache":
+---------------------------------------------------------------------
+docker run -d -t -p 8088:80 --name myApache httpd
+
+3- On the Docker host, Check if that port is listening now
+netstat -an |grep 8088
+
+4- Check if the Image you just started is running:
+--------------------------------------------------
+docker ps -a
+
+
+5-Check if your WebServer is actually running
+--------------------------------------------------
+http://45.32.212.147:8088
+
+
+6-Open a interactive shell with the container"
+--------------------------------------------------
+docker exec -it myApache bash
+
+
+7-Stop the running container
+--------------------------------------------------
+ docker stop myApache
+
+8- Delete the container from your Docker system: 
+--------------------------------------------------
+   docker rm myApache
+
+9- Delete the container image:
+--------------------------------------------------
+  docker rmi httpd
+
+
+10-How to find the volumes that belong to a container:
+--------------------------------------------------
+First, locate the running containers ex:
+docker ps -a |awk '{print $1}'|tail -n +2
+then find the volumes that belong to that container.
+docker inspect -f {{.Name}} <imageID>
+
+
+11- How to stop/remove all docker containers & images:
+-----------------------------------------------------
+docker stop $(docker ps -a|awk '{print $1}'|tail -n +2)
+docker rm $(docker ps -a|awk '{print $1}'|tail -n +2)
+
+==> OR even better
+
+docker stop $(docker ps -a -q)  #This command will stop all Containers
+docker rm $(docker ps -a -q)  #This command will remove all Containers
+
+
+docker rmi $(docker images -a -q)  #This command will remove all images
+
